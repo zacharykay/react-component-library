@@ -1,0 +1,132 @@
+:root {
+  /* Color Theme */
+  --tab-button-bg-color: blue;
+  --tab-button-bg-color-hover: darkblue;
+  --tab-button-text-color: white;
+  --tab-content-bg-color: white;
+  --tab-content-text-color: #333;
+
+  /* Borders */
+  --tab-buttons-border: 1px black solid;
+  --tab-content-border: 2px black solid;
+  --tab-component-border: 5px black solid;
+  --tab-component-border-radius: 10px;
+  --tab-component-shadow: 0 0 1px 2px black;
+
+  /* Spacing */
+  --tab-component-margin: 1rem;
+  --tab-content-padding: 1rem;
+  /* space-around or space-evenly */
+  --buttons-spacing: space-around;
+
+  /* Sizing */
+  --mobile-width: 560px;
+  --accordion-max-width: calc(
+    var(--mobile-width) - (var(--tab-component-margin) * 2) - (var(--tab-content-padding) *
+          2)
+  );
+
+  /* Configurations */
+}
+
+.tab-wrapper {
+  margin: var(--tab-component-margin);
+}
+
+.tabs-container {
+  box-shadow: var(--tab-component-shadow);
+  border-radius: var(--tab-component-border-radius);
+  box-sizing: border-box;
+}
+
+.tab-buttons-container {
+  background-color: var(--tab-button-bg-color);
+  border-top-left-radius: var(--tab-component-border-radius);
+  border-top-right-radius: var(--tab-component-border-radius);
+  display: flex;
+  column-gap: 0rem;
+  overflow: hidden;
+  /* justify-content: var(--buttons-spacing); */
+}
+
+.tab-buttons-container-closed {
+  border-bottom-left-radius: var(--tab-component-border-radius);
+  border-bottom-right-radius: var(--tab-component-border-radius);
+}
+
+.tab-button {
+  color: var(--tab-button-text-color);
+  flex: 1;
+  text-align: center;
+  cursor: pointer;
+}
+
+.tab-button:hover {
+  transition: background-color 0.4s ease-in-out;
+  background-color: var(--tab-button-bg-color-hover);
+}
+
+.tab-button:hover h3 {
+  transform: scale(1.2);
+  transition: transform 0.4s ease-in-out;
+}
+
+.tab-content-container {
+  background-color: var(--tab-content-bg-color);
+  border-bottom-left-radius: var(--tab-component-border-radius);
+  border-bottom-right-radius: var(--tab-component-border-radius);
+}
+
+.tab-content {
+  display: block;
+  color: var(--tab-content-text-color);
+  padding: var(--tab-content-padding);
+}
+
+.tab-hidden {
+  display: none;
+}
+
+.accordion-content {
+  display: none;
+}
+
+@media screen and (max-width: 560px) {
+  .tab-buttons-container-closed {
+    flex-direction: column;
+  }
+  .tab-buttons-container-open {
+    flex-direction: column;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+
+  .tab-button:last-child {
+    border-bottom-left-radius: var(--tab-component-border-radius);
+    border-bottom-right-radius: var(--tab-component-border-radius);
+  }
+  .tab-button:last-child.last-tab-open {
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+  }
+  .tab-content {
+    max-width: var(--accordion-max-width);
+  }
+  .accordion-content {
+    display: block;
+    background-color: var(--tab-content-bg-color);
+    text-align: left;
+    max-width: var(--accordion-max-width);
+  }
+  .tab-button:last-child .accordion-content {
+    border-bottom-left-radius: var(--tab-component-border-radius);
+    border-bottom-right-radius: var(--tab-component-border-radius);
+  }
+  .mobile-tab-hidden {
+    display: none;
+  }
+  /* .tab-buttons-container-open .tab-button.last-tab-open {
+    border-bottom-left-radius: var(--tab-component-border-radius);
+    border-bottom-right-radius: var(--tab-component-border-radius);
+  } */
+}
