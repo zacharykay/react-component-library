@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { ReactComponent as Home } from "../../icons/home.svg";
 import { ReactComponent as Heart } from "../../icons/heart.svg";
@@ -24,14 +24,17 @@ const assignComponent = (icon) => {
   return null;
 };
 
+// ====== Component Options ========
 // Set Whether Tabs' content areas should start closed and be closable
 const closableTabs = true;
+// Set Whether Tabs'content are should have scrollbox and squeeze content to same height or overflow with no scroll; If false tab buttons will stretch to fit as content is clicked
+const scrollableContentArea = true;
 
 // Must use this data structure
 const tabData = [
   {
     tabTitle: "Home",
-    tabContent: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sunt accusamus hic rem animi, impedit, consequatur nesciunt dolor voluptates error aliquam minima fugiat tenetur odit atque. Vero asperiores labore dolores id cumque esse placeat dignissimos velit excepturi, sequi, nam, ratione deleniti voluptas et assumenda soluta eligendi! Deserunt a provident at, excepturi unde culpa, repellat porro ea doloremque consequuntur hic adipisci! Adipisci reprehenderit ea vel, fugit perferendis totam nam. Corporis impedit officia fuga id obcaecati doloribus nisi nemo recusandae quis debitis? Totam, aspernatur, deserunt ab ipsa est quaerat mollitia, maxime aut cupiditate necessitatibus soluta ea eius esse dolorum odit. Temporibus, placeat.`,
+    tabContent: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius sunt accusamus hic rem animi, impedit, consequatur nesciunt dolor voluptates error aliquam minima fugiat tenetur odit atque. Vero asperiores labore dolores id cumque esse placeat dignissimos velit excepturi, sequi, nam, ratione deleniti voluptas et assumenda soluta eligendi! Deserunt a provident at, excepturi unde culpa, repellat porro ea doloremque consequuntur hic adipisci! Adipisci reprehenderit ea vel, fugit perferendis totam nam. Corporis impedit officia fuga id obcaecati doloribus nisi nemo recusandae quis debitis? Totam, aspernatur, deserunt ab ipsa est quaerat mollitia, maxime aut cupiditate necessitatibus soluta ea eius esse dolorum odit. Temporibus, placeat. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illo quidem excepturi soluta, incidunt quibusdam iure. Molestiae eligendi reiciendis consequatur doloribus possimus. Nobis necessitatibus illo numquam amet quibusdam. Impedit fugiat culpa tenetur voluptate praesentium quidem facere. Accusantium aliquam odit consequatur nemo non dolor ratione sunt nulla. Sit aliquid eius atque delectus cum quod, hic accusantium doloribus voluptatem? Minus dolores velit tempora consequuntur odio tempore dicta assumenda id labore neque vel, consectetur reprehenderit fugit voluptate itaque sed saepe. Tenetur nam quaerat sapiente dolores dolorum similique illum quod, consequuntur optio, minima qui dolor quidem sunt quo iste inventore aut maiores perferendis rerum a?`,
     icon: "HomeIcon",
   },
   {
@@ -53,10 +56,16 @@ const tabData = [
 
 const Tabs = () => {
   const [ currentTab, setCurrentTab ] = useState(closableTabs ? null : 0);
+  const [ tabContentHeight, setContentTabHeight ] = useState(0);
+  const buttonRef = useRef();
+
+  useEffect(() => {
+    setContentTabHeight(buttonRef.current.clientHeight);
+  }, []);
 
   return (
     <div className="tab-wrapper">
-      <div className="tabs-container">
+      <div className="tabs-container" ref={buttonRef}>
         <div
           className={
             currentTab !== null ? (
@@ -97,6 +106,16 @@ const Tabs = () => {
             ) : (
               "tab-content-container"
             )
+          }
+          style={
+            scrollableContentArea ? (
+              {
+                height: `${tabContentHeight}px`,
+                maxHeight: `${tabContentHeight}px`,
+                overflowX: "hidden",
+                overflowY: "auto",
+              }
+            ) : null
           }
         >
           {tabData.map((tab, index) => {

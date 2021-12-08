@@ -64,6 +64,7 @@
   flex: 1;
   cursor: pointer;
   min-height: var(--tab-button-height);
+  max-height: var(--tab-button-height);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -113,6 +114,9 @@
 }
 
 .tab-content {
+  /* height: 400px; */
+  /* overflow-x: hidden;
+  overflow-y: auto; */
   color: var(--tab-content-text-color);
   padding: var(--tab-content-padding);
 }
